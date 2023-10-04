@@ -3,6 +3,7 @@ import { Database } from './database.js'
 import { buildRoutePath } from './utils/build-route-path.js'
 
 const database = new Database()
+const actualDate = new Date()
 
 export const routes = [
     {
@@ -25,15 +26,13 @@ export const routes = [
         handler: (req, res) => {
             const { title, description } = req.body
 
-            const actualDate = new Date()
-
             const task = {
                 id: randomUUID(),
                 title,
                 description,
-                completed_at: '',
+                completed_at: null,
                 created_at: actualDate,
-                updated_at: ''
+                updated_at: null
             }
 
             database.insert('tasks', task)
@@ -57,11 +56,12 @@ export const routes = [
         path: buildRoutePath('/tasks/:id'),
         handler: (req, res) => {
             const { id } = req.params
-            const { name, email } = req.body
+            const { title, description } = req.body
 
             database.update('tasks', id, {
-                name,
-                email
+                title,
+                description,
+                updated_at: actualDate
             })
 
             return res.writeHead(204).end()

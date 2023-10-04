@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises'
 
 const databasePath = new URL('../db.json', import.meta.url)
+const actualDate = new Date()
 
 
 export class Database {
@@ -50,8 +51,9 @@ export class Database {
     update(table, id, data) {
         const rowIndex = this.#database[table].findIndex(row => row.id === id)
 
+        const { created_at, completed_at } = this.#database[table][rowIndex]
         if (rowIndex > -1) {
-            this.#database[table][rowIndex] = { id, ...data }
+            this.#database[table][rowIndex] = { id, ...data, created_at, completed_at, updated_at: actualDate }
             this.#persist()
         }
     }
