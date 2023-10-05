@@ -32,7 +32,7 @@ export const routes = [
                 description,
                 completed_at: null,
                 created_at: actualDate,
-                updated_at: null
+                updated_at: actualDate
             }
 
             database.insert('tasks', task)
