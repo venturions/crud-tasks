@@ -64,6 +64,17 @@ export const routes = [
                 updated_at: actualDate
             })
 
-            return res.writeHead(204).end()
+            return res.writeHead(201).end()
+        }
+    },
+    {
+        method: 'PATCH',
+        path: buildRoutePath('/tasks/:id/complete'),
+        handler: (req, res) => {
+            const { id } = req.params
+
+            database.completeTask('tasks', id)
+
+            return res.writeHead(201).end()
         }
     }]
